@@ -92,7 +92,7 @@
       "MSG_KEY_WEATHER_FAILED": 104
     },
     "enableMultiJS": false,
-    "displayName": "Obsidian",
+    "displayName": "Arrowhead",
     "watchapp": {
       "onlyShownOnCommunication": false,
       "hiddenApp": false,
@@ -109,7 +109,7 @@
       "configurable"
     ]
   },
-  "name": "Obsidian",
+  "name": "Arrowhead",
   "devDependencies": {
     "pebble-fctx-compiler": "^1.2.1"
   },
