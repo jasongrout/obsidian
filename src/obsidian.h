@@ -173,8 +173,8 @@ extern AppTimer * weather_request_timer;
 #define COLOR(c) ((GColor8) { .argb = (c) })
 
 //#define OBSIDIAN_SHOW_NUMBERS
-#define OBSIDIAN_LONG_TICKS
-#define OBSIDIAN_FAT_TICKS
+#define OBSIDIAN_LONG_TICKS 1
+#define OBSIDIAN_FAT_TICKS 1
 //#define OBSIDIAN_ONLY_RELEVANT_NUMBER
 //#define OBSIDIAN_BATTERY_USE_TEXT
 
