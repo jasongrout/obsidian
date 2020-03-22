@@ -15,6 +15,14 @@
 #include "drawing.h"
 #include "obsidian.h"
 
+#define HAND_WIDTH 8
+#define INNER_HAND_WIDTH 2
+#define TICK_LENGTH_RIGHT 12
+#define TICK_LENGTH_NOTRIGHT 18
+#define TICK_WIDTH 4
+// how long the tip of the hour hand should be
+#define HOUR_TIP 8
+
 
 #ifdef PBL_COLOR
 fixed_t string_width(FContext *fctx, char *str, FFont *font, int size)
@@ -459,8 +467,8 @@ void background_update_proc(Layer *layer, GContext *ctx) {
             for (int i = 0; i < 12; ++i) {
                 if (config_hour_ticks == 2 && (i % 3) != 0) continue;
                 int32_t angle = i * TRIG_MAX_ANGLE / 12;
-                int tick_length = (i % 3 == 0) ? 12 : 8;
-                int tick_width = 4;
+                int tick_length = (i % 3 == 0) ? TICK_LENGTH_RIGHT : TICK_LENGTH_NOTRIGHT;
+                int tick_width = TICK_WIDTH;
                 graphics_draw_line_with_width(ctx, get_radial_border_point(0, angle),
                                           get_radial_border_point(tick_length, angle), tick_width);
             }
@@ -851,15 +859,17 @@ void background_update_proc(Layer *layer, GContext *ctx) {
 
     // minute hand
     graphics_context_set_stroke_color(ctx, COLOR(config_color_minute_hand));
-    graphics_draw_line_with_width(ctx, minute_hand, center, 4);
+    graphics_draw_line_with_width(ctx, minute_hand, center, HAND_WIDTH);
     graphics_context_set_stroke_color(ctx, COLOR(config_color_inner_minute_hand));
-    graphics_draw_line_with_width(ctx, get_radial_point(radius - PBL_IF_ROUND_ELSE(20, 12), minute_angle), center, 1);
+    graphics_draw_line_with_width(ctx, get_radial_point(radius - PBL_IF_ROUND_ELSE(20, 12), minute_angle), center, INNER_HAND_WIDTH);
+    // add a tip to the minute hand to have more accurate pointing
+    graphics_draw_line_with_width(ctx, get_radial_point(radius, minute_angle), get_radial_point(radius - PBL_IF_ROUND_ELSE(20, 12), minute_angle), INNER_HAND_WIDTH);
 
     // hour hand
     graphics_context_set_stroke_color(ctx, COLOR(config_color_hour_hand));
-    graphics_draw_line_with_width(ctx, hour_hand, center, 4);
+    graphics_draw_line_with_width(ctx, hour_hand, center, HAND_WIDTH);
     graphics_context_set_stroke_color(ctx, COLOR(config_color_inner_hour_hand));
-    graphics_draw_line_with_width(ctx, get_radial_point(radius * 55 / 100 - 2, hour_angle), center, 1);
+    graphics_draw_line_with_width(ctx, get_radial_point(radius * 55 / 100 - HOUR_TIP, hour_angle), center, INNER_HAND_WIDTH);
 
     // dot in the middle
     graphics_context_set_fill_color(ctx, COLOR(config_color_minute_hand));
